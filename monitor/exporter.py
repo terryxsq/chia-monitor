@@ -19,8 +19,8 @@ class ChiaExporter:
     mempool_size_gauge = Gauge('chia_mempool_size', 'Current mempool size')
 
     # Harvester metrics
-    plot_count_gauge = Gauge('chia_plot_count', 'Plot count being farmed by harvester', ["host", "type"])
-    plot_size_gauge = Gauge('chia_plot_size', 'Size of plots being farmed by harvester', ["host", "type"])
+    plot_count_gauge = Gauge('chia_plot_count', 'Plot count being farmed by harvester', ["host", "type", "nodeid"])
+    plot_size_gauge = Gauge('chia_plot_size', 'Size of plots being farmed by harvester', ["host", "type", "nodeid"])
 
     # Farmer metrics
     signage_point_counter = Counter('chia_signage_points', 'Received signage points')
@@ -80,10 +80,10 @@ class ChiaExporter:
             self.update_price_metrics(event)
 
     def update_harvester_metrics(self, event: HarvesterPlotsEvent) -> None:
-        self.plot_count_gauge.labels(event.host, "OG").set(event.plot_count)
-        self.plot_count_gauge.labels(event.host, "portable").set(event.portable_plot_count)
-        self.plot_size_gauge.labels(event.host, "OG").set(event.plot_size)
-        self.plot_size_gauge.labels(event.host, "portable").set(event.portable_plot_size)
+        self.plot_count_gauge.labels(event.host, "OG", event.nodeid).set(event.plot_count)
+        self.plot_count_gauge.labels(event.host, "portable", event.nodeid).set(event.portable_plot_count)
+        self.plot_size_gauge.labels(event.host, "OG", event.nodeid).set(event.plot_size)
+        self.plot_size_gauge.labels(event.host, "portable", event.nodeid).set(event.portable_plot_size)
 
     def update_farmer_metrics(self, event: FarmingInfoEvent):
         self.challenges_counter.inc()

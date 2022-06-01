@@ -119,6 +119,7 @@ class RpcCollector(Collector):
             ts = datetime.now()
             for harvester in harvesters["harvesters"]:
                 host = harvester["connection"]["host"]
+                nodeid = harvester["connection"]["node_id"]
                 plots = harvester["plots"]
                 og_plots = [plot for plot in plots if plot["pool_contract_puzzle_hash"] is None]
                 portable_plots = [
@@ -130,7 +131,8 @@ class RpcCollector(Collector):
                                             portable_plot_count=len(portable_plots),
                                             portable_plot_size=sum(portable_plot["file_size"]
                                                                    for portable_plot in portable_plots),
-                                            host=host)
+                                            host=host,
+                                            nodeid=nodeid)
                 await self.publish_event(event)
         except:
             raise ConnectionError("Failed to get harvesters via RPC. Is your farmer running?")

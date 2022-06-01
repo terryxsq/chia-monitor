@@ -7,6 +7,7 @@ class HarvesterPlotsEvent(ChiaEvent):
     id = Column(Integer, primary_key=True, autoincrement=True)
     ts = Column(DateTime, index=True, nullable=False)
     host = Column(String(255), nullable=False)
+    nodeid = Column(String(100))
     plot_count = Column(Integer)
     portable_plot_count = Column(Integer)
     plot_size = Column(Integer)
