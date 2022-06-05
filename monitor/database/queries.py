@@ -61,7 +61,7 @@ def get_plot_delta(db_session: Session, period=timedelta(hours=24)) -> Tuple[int
     sub_query = select([
         HarvesterPlotsEvent.plot_count, HarvesterPlotsEvent.portable_plot_count, HarvesterPlotsEvent.plot_size,
         HarvesterPlotsEvent.portable_plot_size
-    ]).where(HarvesterPlotsEvent.ts > initial_ts).order_by(HarvesterPlotsEvent.ts).group_by(HarvesterPlotsEvent.host)
+    ]).where(HarvesterPlotsEvent.ts > initial_ts).order_by(HarvesterPlotsEvent.ts).group_by(HarvesterPlotsEvent.host, HarvesterPlotsEvent.nodeid)
     result = db_session.execute(
         select([
             func.sum(sub_query.c.plot_count),
@@ -113,7 +113,7 @@ def get_plot_size(db_session: Session) -> Optional[int]:
 def get_og_plot_size(db_session: Session) -> Optional[int]:
     sub_query = select([
         func.max(HarvesterPlotsEvent.plot_size).label("plot_size")
-    ]).where(HarvesterPlotsEvent.ts > datetime.now() - timedelta(seconds=30)).group_by(HarvesterPlotsEvent.host)
+    ]).where(HarvesterPlotsEvent.ts > datetime.now() - timedelta(seconds=30)).group_by(HarvesterPlotsEvent.host, HarvesterPlotsEvent.nodeid)
     result = db_session.execute(select(func.sum(sub_query.c.plot_size)))
     return result.scalars().first()
 
@@ -121,7 +121,7 @@ def get_og_plot_size(db_session: Session) -> Optional[int]:
 def get_og_plot_count(db_session: Session) -> Optional[int]:
     sub_query = select([
         func.max(HarvesterPlotsEvent.plot_count).label("plot_count")
-    ]).where(HarvesterPlotsEvent.ts > datetime.now() - timedelta(seconds=30)).group_by(HarvesterPlotsEvent.host)
+    ]).where(HarvesterPlotsEvent.ts > datetime.now() - timedelta(seconds=30)).group_by(HarvesterPlotsEvent.host, HarvesterPlotsEvent.nodeid)
     result = db_session.execute(select(func.sum(sub_query.c.plot_count)))
     return result.scalars().first()
 
@@ -129,7 +129,7 @@ def get_og_plot_count(db_session: Session) -> Optional[int]:
 def get_portable_plot_size(db_session: Session) -> Optional[int]:
     sub_query = select([
         func.max(HarvesterPlotsEvent.portable_plot_size).label("portable_plot_size")
-    ]).where(HarvesterPlotsEvent.ts > datetime.now() - timedelta(seconds=30)).group_by(HarvesterPlotsEvent.host)
+    ]).where(HarvesterPlotsEvent.ts > datetime.now() - timedelta(seconds=30)).group_by(HarvesterPlotsEvent.host, HarvesterPlotsEvent.nodeid)
     result = db_session.execute(select(func.sum(sub_query.c.portable_plot_size)))
     return result.scalars().first()
 
@@ -137,7 +137,7 @@ def get_portable_plot_size(db_session: Session) -> Optional[int]:
 def get_portable_plot_count(db_session: Session) -> Optional[int]:
     sub_query = select([
         func.max(HarvesterPlotsEvent.portable_plot_count).label("portable_plot_count")
-    ]).where(HarvesterPlotsEvent.ts > datetime.now() - timedelta(seconds=30)).group_by(HarvesterPlotsEvent.host)
+    ]).where(HarvesterPlotsEvent.ts > datetime.now() - timedelta(seconds=30)).group_by(HarvesterPlotsEvent.host, HarvesterPlotsEvent.nodeid)
     result = db_session.execute(select(func.sum(sub_query.c.portable_plot_count)))
     return result.scalars().first()
 
