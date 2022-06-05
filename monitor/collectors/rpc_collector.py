@@ -119,7 +119,7 @@ class RpcCollector(Collector):
             ts = datetime.now()
             for harvester in harvesters["harvesters"]:
                 host = harvester["connection"]["host"]
-                nodeid = harvester["connection"]["node_id"]
+                nodeid = harvester["connection"]["node_id"][-8:]
                 plots = harvester["plots"]
                 og_plots = [plot for plot in plots if plot["pool_contract_puzzle_hash"] is None]
                 portable_plots = [
