@@ -129,6 +129,7 @@ if __name__ == "__main__":
         status_interval_minutes = config["notifications"]["status_interval_minutes"]
         lost_plots_alert_threshold = config["notifications"]["lost_plots_alert_threshold"]
         disable_proof_found_alert = config["notifications"]["disable_proof_found_alert"]
+        alert_role_id = config["notifications"]["alert_role_id"]
     except KeyError as ex:
         logging.error(
             f"Failed to validate config. Missing required key {ex}. Please compare the fields of your config.json with the config-example.json and fix all inconsistencies."
@@ -138,7 +139,7 @@ if __name__ == "__main__":
     exporter = ChiaExporter(exporter_port)
     if enable_notifications:
         notifier = Notifier(status_url, alert_url, status_interval_minutes, lost_plots_alert_threshold,
-                            disable_proof_found_alert, notifications_refresh_interval)
+                            disable_proof_found_alert, notifications_refresh_interval, alert_role_id)
     else:
         notifier = None
 
