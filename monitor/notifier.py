@@ -32,7 +32,7 @@ class Notifier:
             SummaryNotification(self.status_apobj, status_interval_minutes),
         ]
         if not disable_proof_found_alert:
-            self.notifications.append(FoundProofNotification(self.status_apobj, alert_role_id))
+            self.notifications.append(FoundProofNotification(self.alert_apobj, alert_role_id))
 
     def task(self) -> None:
         while True:
