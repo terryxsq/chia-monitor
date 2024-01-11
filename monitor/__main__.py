@@ -120,6 +120,7 @@ if __name__ == "__main__":
 
     try:
         exporter_port = config["exporter_port"]
+        node_name = config["node_name"]
         rpc_refresh_interval = config["rpc_collector"]["refresh_interval_seconds"]
         price_refresh_interval = enable_notifications = config["price_collector"]["refresh_interval_seconds"]
         enable_notifications = config["notifications"]["enable"]
@@ -138,7 +139,7 @@ if __name__ == "__main__":
 
     exporter = ChiaExporter(exporter_port)
     if enable_notifications:
-        notifier = Notifier(status_url, alert_url, status_interval_minutes, lost_plots_alert_threshold,
+        notifier = Notifier(node_name, status_url, alert_url, status_interval_minutes, lost_plots_alert_threshold,
                             disable_proof_found_alert, notifications_refresh_interval, alert_role_id)
     else:
         notifier = None

@@ -1,4 +1,5 @@
 {
+    "node_name":"NODE1",
     "exporter_port": 8000,
     "rpc_collector" : {
         "refresh_interval_seconds": 10

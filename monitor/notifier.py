@@ -17,7 +17,7 @@ class Notifier:
     alert_role_id: str
     stopped = False
 
-    def __init__(self, status_url: str, alert_url: str, status_interval_minutes: int,
+    def __init__(self, node_name: str, status_url: str, alert_url: str, status_interval_minutes: int,
                  lost_plots_alert_threshold: int, disable_proof_found_alert: bool,
                  refresh_interval_seconds: int, alert_role_id: str) -> None:
         self.log = logging.getLogger(__name__)
@@ -29,7 +29,7 @@ class Notifier:
             LostSyncNotification(self.alert_apobj),
             LostPlotsNotification(self.alert_apobj, lost_plots_alert_threshold),
             PaymentNotification(self.alert_apobj),
-            SummaryNotification(self.status_apobj, status_interval_minutes),
+            SummaryNotification(self.status_apobj, node_name, status_interval_minutes),
         ]
         if not disable_proof_found_alert:
             self.notifications.append(FoundProofNotification(self.alert_apobj, alert_role_id))

@@ -18,9 +18,10 @@ class SummaryNotification(Notification):
     startup_delay: timedelta
     last_summary_ts: datetime
 
-    def __init__(self, apobj: Apprise, summary_interval_minutes: int) -> None:
+    def __init__(self, apobj: Apprise, node_name: str, summary_interval_minutes: int) -> None:
         super().__init__(apobj)
         self.startup_delay = timedelta(seconds=30)
+        self.node_name = node_name
         self.summary_interval = timedelta(minutes=summary_interval_minutes)
         self.last_summary_ts: datetime = datetime.now() - self.summary_interval + self.startup_delay
 
@@ -63,6 +64,7 @@ class SummaryNotification(Notification):
             except ZeroDivisionError:
                 expected_minutes_to_win = 0
             summary = "\n".join([
+                format_node_name(self.node_name),
                 format_og_plot_count(last_og_plot_count),
                 format_portable_plot_count(last_portable_plot_count),
                 format_og_plot_size(last_og_plot_size),
@@ -79,6 +81,10 @@ class SummaryNotification(Notification):
                 format_full_node_count(last_connections.full_node_count),
                 format_synced(last_state.synced),
             ])
+            if self.node_name is not None:
+                customTitle = f'** 👨‍🌾 Farm Status: {self.node_name} 👩‍🌾 **'
+            else:
+                customTitle = f'** 👨‍🌾 Farm Status 👩‍🌾 **'
             sent = self.apobj.notify(title='** 👨‍🌾 Farm Status 👩‍🌾 **', body=summary)
             if sent:
                 self.last_summary_ts = datetime.now()

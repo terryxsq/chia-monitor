@@ -1,5 +1,7 @@
 from chia.util.misc import format_bytes, format_minutes
 
+def format_node_name(node_name: str) -> str:
+    return f"🖥️ NODE NAME: {node_name} 🖥️"
 
 def format_og_plot_count(plot_count: int) -> str:
     return f"🌾 OG Plot Count: {plot_count}"
