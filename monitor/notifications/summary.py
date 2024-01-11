@@ -64,7 +64,6 @@ class SummaryNotification(Notification):
             except ZeroDivisionError:
                 expected_minutes_to_win = 0
             summary = "\n".join([
-                format_node_name(self.node_name),
                 format_og_plot_count(last_og_plot_count),
                 format_portable_plot_count(last_portable_plot_count),
                 format_og_plot_size(last_og_plot_size),
@@ -81,7 +80,7 @@ class SummaryNotification(Notification):
                 format_full_node_count(last_connections.full_node_count),
                 format_synced(last_state.synced),
             ])
-            if self.node_name is not None:
+            if len(self.node_name) >= 0:
                 customTitle = f'** 👨‍🌾 Farm Status: {self.node_name} 👩‍🌾 **'
             else:
                 customTitle = f'** 👨‍🌾 Farm Status 👩‍🌾 **'
