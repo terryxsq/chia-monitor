@@ -84,7 +84,7 @@ class SummaryNotification(Notification):
                 customTitle = f'** 👨‍🌾 Farm Status: {self.node_name} 👩‍🌾 **'
             else:
                 customTitle = f'** 👨‍🌾 Farm Status 👩‍🌾 **'
-            sent = self.apobj.notify(title='** 👨‍🌾 Farm Status 👩‍🌾 **', body=summary)
+            sent = self.apobj.notify(title=customTitle, body=summary)
             if sent:
                 self.last_summary_ts = datetime.now()
                 return True
