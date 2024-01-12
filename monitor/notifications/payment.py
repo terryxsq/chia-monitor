@@ -7,6 +7,10 @@ from monitor.notifications.notification import Notification
 class PaymentNotification(Notification):
     last_mojos: int = None
 
+    def __init__(self, apobj: Apprise, node_name: str) -> None:
+        super().__init__(apobj)
+        self.node_name = node_name
+
     def condition(self) -> bool:
         with session() as db_session:
             current_mojos = get_current_balance(db_session)
@@ -21,5 +25,6 @@ class PaymentNotification(Notification):
         with session() as db_session:
             last_payment_mojos = get_last_payment(db_session)
         return self.apobj.notify(title='** 🤑 Payment received! 🤑 **',
-                                 body="Your wallet received a new payment\n" + \
-                                     f"🌱 +{last_payment_mojos/1e12:.5f} XCH")
+                                 body=f"Farmer: {self.node_name}\n" +
+                                    "Your wallet received a new payment\n" + \
+                                    f"🌱 +{last_payment_mojos/1e12:.5f} XCH")

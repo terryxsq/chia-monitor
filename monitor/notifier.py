@@ -26,13 +26,13 @@ class Notifier:
         self.refresh_interval = refresh_interval_seconds
         self.alert_role_id = alert_role_id
         self.notifications = [
-            LostSyncNotification(self.alert_apobj),
-            LostPlotsNotification(self.alert_apobj, lost_plots_alert_threshold),
-            PaymentNotification(self.alert_apobj),
+            LostSyncNotification(self.alert_apobj, node_name),
+            LostPlotsNotification(self.alert_apobj, node_name, lost_plots_alert_threshold),
+            PaymentNotification(self.alert_apobj, node_name),
             SummaryNotification(self.status_apobj, node_name, status_interval_minutes),
         ]
         if not disable_proof_found_alert:
-            self.notifications.append(FoundProofNotification(self.alert_apobj, alert_role_id))
+            self.notifications.append(FoundProofNotification(self.alert_apobj, node_name, alert_role_id))
 
     def task(self) -> None:
         while True:

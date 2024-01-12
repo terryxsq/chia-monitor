@@ -10,9 +10,10 @@ class LostPlotsNotification(Notification):
     highest_plot_count: int
     alert_threshold: int
 
-    def __init__(self, apobj: Apprise, alert_threshold: int) -> None:
+    def __init__(self, apobj: Apprise, node_name: str, alert_threshold: int) -> None:
         super().__init__(apobj)
         self.last_plot_count = None
+        self.node_name = node_name
         self.highest_plot_count = None
         self.alert_threshold = alert_threshold
 
@@ -29,8 +30,10 @@ class LostPlotsNotification(Notification):
     def trigger(self) -> None:
         return self.apobj.notify(title='** 🚨 Farmer Lost Plots! 🚨 **',
                                  body="It seems like your farmer lost some plots\n" +
+                                 f"Farmer: {self.node_name}\n" +
                                  f"Expected: {self.highest_plot_count}, Found: {self.last_plot_count}\n")
 
     def recover(self) -> None:
         return self.apobj.notify(title='** ✅ Farmer Plots recoverd! ✅ **',
-                                 body="Your farmer's plot count has recovered to its previous value")
+                                 body=f"Farmer: {self.node_name}\n" +
+                                 "Your farmer's plot count has recovered to its previous value")

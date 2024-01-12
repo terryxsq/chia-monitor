@@ -9,8 +9,9 @@ class FoundProofNotification(Notification):
     last_proofs_found: int = None
     alert_role_id: str = None
 
-    def __init__(self, apobj: Apprise, alert_role_id: str) -> None:
+    def __init__(self, apobj: Apprise, node_name: str, alert_role_id: str) -> None:
         super().__init__(apobj)
+        self.node_name = node_name
         self.alert_role_id = alert_role_id
 
     def condition(self) -> bool:
@@ -26,7 +27,9 @@ class FoundProofNotification(Notification):
     def trigger(self) -> None:
         if not self.alert_role_id:
             return self.apobj.notify(title='** 🤑 Proof found! 🤑 **',
-                                 body="Your farm found a new partial or full proof")
+                                 body=f"Farmer: {self.node_name}\n" +
+                                 "Your farm found a new partial or full proof")
         else:
             return self.apobj.notify(title='** 🤑 Proof found! 🤑 **',
-                                 body="<@&"+self.alert_role_id+"> Your farm found a new partial or full proof")
+                                 body=f"Farmer: {self.node_name}\n" +
+                                 "<@&"+self.alert_role_id+"> Your farm found a new partial or full proof")
