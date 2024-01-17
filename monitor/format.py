@@ -6,138 +6,115 @@ def format_node_name(node_name: str) -> str:
 def format_og_plot_count(plot_count: int) -> str:
     return f"🌾 OG Plot Count: {plot_count}"
 
-
 def format_og_plot_size(plot_size: int) -> str:
     return f"🧺 OG Plot Size: {format_bytes(plot_size)}"
 
+def format_plot_count_info(plot_count_og: int, plot_count_portable: int) -> str:
+    return f"🌾 OG/Portable Plot count: {plot_count_og}/{plot_count_portable}"
+
+def format_plot_size_info(plot_size_og: int, plot_size_portable: int) -> str:
+    return f"🧺 OG/Portable Plot size: {format_bytes(plot_size_og)}/{format_bytes(plot_size_portable)}"
 
 def format_portable_plot_count(plot_count: int) -> str:
     return f"🌾 Portable Plot Count: {plot_count}"
 
-
 def format_portable_plot_size(plot_size: int) -> str:
     return f"🧺 Portable Plot Size: {format_bytes(plot_size)}"
-
 
 def format_plot_count(plot_count: int) -> str:
     return f"🌾 Plot Count: {plot_count}"
 
-
 def format_plot_size(plot_size: int) -> str:
     return f"🧺 Plot Size: {format_bytes(plot_size)}"
 
-
 def format_plot_delta_24h(count_delta: int, size_delta: int) -> str:
     size_prefix = "+" if size_delta > 0 else "-"
+    if size_delta == 0:
+        return None
     return f"🚜 Plot Change 24h: {count_delta:+} ({size_prefix}{format_bytes(abs(size_delta))})"
 
-
 def format_balance(balance: int) -> str:
+    if balance == 0:
+        return None
     return f"💰 Total Balance: {balance/1e12:.5f} XCH"
-
 
 def format_farmed(balance: int) -> str:
     return f"💸 Total Farmed: {balance/1e12:.5f} XCH"
 
-
 def format_space(space: int) -> str:
     return f"💾 Current Netspace: {format_bytes(space)}"
 
-
 def format_diffculty(difficulty: int) -> str:
     return f"📈 Farming Difficulty: {difficulty}"
-
 
 def format_peak_height(peak_height: int, fix_indent=False) -> str:
     indent = " " * (1 if fix_indent else 0)
     return f"🏔️ {indent}Peak Height: {peak_height}"
 
-
 def format_synced(synced: int) -> str:
     return f"🔄 Synced: {synced}"
 
-
 def format_full_node_count(full_node_count: int, node_type="Full Node") -> str:
     return f"📶 {node_type} Peer Count: {full_node_count}"
-
 
 def format_hostname(hostname: str, fix_indent=False) -> str:
     indent = " " * (1 if fix_indent else 0)
     return f"🖥️ {indent}Host: {hostname}"
 
-
 def format_challenge_hash(challenge_hash: str) -> str:
     return f"🎰 Challenge Hash: {challenge_hash}"
-
 
 def format_challenges_per_min(challenges_per_min: float) -> str:
     return f"🎰 Challenges Per Minute: {challenges_per_min:.2f}"
 
-
 def format_signage_point(signage_point: str) -> str:
     return f"⌛ Signage Point: {signage_point}"
-
 
 def format_signage_points_per_min(signage_points_per_min: float) -> str:
     return f"⌛ Signage Points Per Minute: {signage_points_per_min:.2f}"
 
-
 def format_signage_point_index(signage_point_index: int) -> str:
     return f"🔏 Signage Point Index: {signage_point_index}"
-
 
 def format_passed_filter(passed_filter: int) -> str:
     return f"🔎 Passed Filter: {passed_filter}"
 
-
 def format_passed_filter_per_min(passed_filter_per_min: float) -> str:
     return f"🔎 Passed Filters Per Minute: {passed_filter_per_min:.2f}"
-
 
 def format_proofs(proofs: int) -> str:
     return f"✅ Total Proofs found: {proofs}"
 
-
 def format_expected_time_to_win(minutes: int) -> str:
     return f"🕰️ Time To Win: {format_minutes(minutes)}"
-
 
 def format_current_points(points: int) -> str:
     return f"🟣 Current Points: {points}"
 
-
 def format_pool_difficulty(difficulty: int) -> str:
     return f"📈 Pool Difficulty: {difficulty}"
-
 
 def format_points_found(points: int) -> str:
     return f"🟡 Pool Found: {points}"
 
-
 def format_points_acknowledged(points: int) -> str:
     return f"🟢 Pool Acknowledged: {points}"
-
 
 def format_points_found_24h(points: int) -> str:
     return f"🟡 Pool Found Last 24H: {points}"
 
-
 def format_points_acknowledged_24h(points: int) -> str:
     return f"🟢 Pool Acknowledged Last 24H: {points}"
 
-
 def format_pool_errors_24h(errors: int) -> str:
     return f"❌ Pool Errors 24h: {errors}"
-
 
 def format_price(amount: int, currency: str, fix_indent=False) -> str:
     indent = " " * (1 if fix_indent else 0)
     return f"🏷️ {indent}Price in {currency}: {amount}"
 
-
 def format_mempool_size(mempool_size: int) -> str:
     return f"🧮 Mempool Size: {mempool_size}"
-
 
 def format_lookup_time(lookup_time: int, fix_indent=False) -> str:
     indent = " " * (1 if fix_indent else 0)
