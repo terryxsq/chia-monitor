@@ -2,7 +2,7 @@ from monitor.database import session
 from monitor.database.queries import get_current_balance, get_last_payment
 from monitor.format import *
 from monitor.notifications.notification import Notification
-
+from apprise.Apprise import Apprise
 
 class PaymentNotification(Notification):
     last_mojos: int = None

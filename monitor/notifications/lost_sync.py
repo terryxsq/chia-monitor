@@ -2,7 +2,7 @@ from monitor.database import session
 from monitor.database.queries import get_sync_status
 from monitor.format import *
 from monitor.notifications.notification import Notification
-
+from apprise.Apprise import Apprise
 
 class LostSyncNotification(Notification):
 
